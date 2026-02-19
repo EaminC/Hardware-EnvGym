@@ -1,0 +1,41 @@
+{
+  "name": "facebook_zstd",
+  "url": "https://github.com/facebook/zstd",
+  "mvw": {
+    "mvw_command": "make && make check",
+    "build_command": "make",
+    "run_command": "make check",
+    "input_scale": "default tests (skip large data tests)",
+    "success_criteria": "exit code 0, All tests completed successfully"
+  },
+  "environment": {
+    "os": "Linux",
+    "methodology": "tutorial.md one-pass profiling. Original peaks from one-pass runs. Re-measurement: process-tree conservative estimate 2× single-process (make -j parallel jobs). For measured process-tree peaks run: bash Label/measure_facebook_zstd.sh then python3 Label/update_result_from_peaks.py Label/result/facebook_zstd_peaks.txt Label/result/facebook_zstd.json"
+  },
+  "static_triage": {
+    "requires_gpu": false,
+    "likely_bottlenecks": ["RAM", "CPU"]
+  },
+  "peaks_observed": {
+    "build_peak_ram_gb": 0.34,
+    "run_peak_ram_gb": 1.42,
+    "peak_disk_gb": 0.02,
+    "build_runtime_seconds": 82.77,
+    "run_runtime_seconds": 59.62,
+    "cpu_utilization_summary": "build 99%, run 109%"
+  },
+  "margins_used": "none",
+  "min_hardware": {
+    "build_min_spec": {
+      "min_ram_gb": 2,
+      "min_disk_gb": 1,
+      "min_vcpu": 2
+    },
+    "run_min_spec": {
+      "min_ram_gb": 2,
+      "min_disk_gb": 1,
+      "min_vcpu": 2
+    },
+    "summary": "2 vCPU / 2 GB RAM / 1 GB disk, no GPU. Raw peaks (rounded up to SKU): build 0.34 GB RAM, run 1.42 GB RAM, disk 0.02 GB."
+  }
+}

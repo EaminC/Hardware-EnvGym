@@ -1,0 +1,42 @@
+{
+  "name": "nlohmann_json",
+  "url": "https://github.com/nlohmann/json",
+  "mvw": {
+    "mvw_command": "make -j4 && ( ./test1 & ./test2 & ./test3 & ./test4 & wait )",
+    "build_command": "make -j4",
+    "run_command": "( ./test1 & ./test2 & ./test3 & ./test4 & wait )",
+    "input_scale": "4 parallel compilations (g++), then 4 parallel test runs (JSON create/parse/serialize)",
+    "success_criteria": "exit code 0, all binaries run successfully"
+  },
+  "environment": {
+    "os": "Linux",
+    "methodology": "tutorial.md one-pass profiling; process-tree RSS peak (monitor_tree.sh), not single-process"
+  },
+  "static_triage": {
+    "requires_gpu": false,
+    "likely_bottlenecks": ["RAM", "CPU"],
+    "notes": "C++ header-only library; no GPU, no large assets."
+  },
+  "peaks_observed": {
+    "build_peak_ram_gb": 0.9617,
+    "run_peak_ram_gb": 0.005,
+    "peak_disk_gb": 0.0007,
+    "build_runtime_seconds": 2,
+    "run_runtime_seconds": 0,
+    "cpu_utilization_summary": "build high (parallel compile, 4 g++ jobs), run low (4 small JSON programs)"
+  },
+  "margins_used": "none",
+  "min_hardware": {
+    "build_min_spec": {
+      "min_ram_gb": 2,
+      "min_disk_gb": 1,
+      "min_vcpu": 2
+    },
+    "run_min_spec": {
+      "min_ram_gb": 2,
+      "min_disk_gb": 1,
+      "min_vcpu": 2
+    },
+    "summary": "2 vCPU / 2 GB RAM / 1 GB disk, no GPU. Raw process-tree peaks (rounded up to SKU): build 0.96 GB RAM, run 0.005 GB RAM, disk 0.0007 GB."
+  }
+}

@@ -1,0 +1,6 @@
+=== [1/4] Clone 仓库 ===
+Cloning into '/home/cc/Label/probfuzz_measure'...
+=== [2/4] Build 阶段（install）— 进程树峰值监控 ===
+=== [3/4] Run 阶段（./probfuzz.py 1）— 进程树峰值监控 ===
+=== [4/4] 输出 result/probfuzz.json ===
+Done. Build peak RAM: 0.2114 GB, Run peak RAM: 0 GB, Disk: .0025 GB

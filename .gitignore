@@ -1,0 +1,7 @@
+# 忽略根目录下除以下以外的所有项
+/*
+!.gitignore
+!README.md
+!hardware.json
+!tutorial.md
+!result

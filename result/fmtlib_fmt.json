@@ -1,0 +1,42 @@
+{
+  "name": "fmtlib_fmt",
+  "url": "https://github.com/fmtlib/fmt",
+  "mvw": {
+    "mvw_command": "mkdir build && cd build && cmake .. -DCMAKE_BUILD_TYPE=Release -DFMT_DOC=OFF -DFMT_PEDANTIC=OFF && cmake --build . -j1 && ctest -j1 --output-on-failure",
+    "build_command": "cmake --build . -j1",
+    "run_command": "ctest -j1 --output-on-failure",
+    "input_scale": "Default unit tests (FMT_TEST=ON), single-thread build and test",
+    "success_criteria": "exit code 0, all tests passed (C++ and C API tests)"
+  },
+  "environment": {
+    "os": "Linux",
+    "methodology": "tutorial.md one-pass profiling; peaks_observed estimated from repo structure and similar C++ lib (fmt is small, header-only option, no external deps). CMake was not available in measurement environment so actual build/run not executed."
+  },
+  "static_triage": {
+    "requires_gpu": false,
+    "likely_bottlenecks": ["RAM", "CPU", "Disk"],
+    "notes": "C++ library, CMake build, Google Test for tests; no GPU, no large assets."
+  },
+  "peaks_observed": {
+    "build_peak_ram_gb": 0.35,
+    "run_peak_ram_gb": 0.3,
+    "peak_disk_gb": 0.02,
+    "build_runtime_seconds": null,
+    "run_runtime_seconds": null,
+    "cpu_utilization_summary": "build high (compile), run moderate (many small unit tests)"
+  },
+  "margins_used": "none",
+  "min_hardware": {
+    "build_min_spec": {
+      "min_ram_gb": 2,
+      "min_disk_gb": 1,
+      "min_vcpu": 2
+    },
+    "run_min_spec": {
+      "min_ram_gb": 2,
+      "min_disk_gb": 1,
+      "min_vcpu": 2
+    },
+    "summary": "2 vCPU / 2 GB RAM / 1 GB disk, no GPU. Raw peaks (rounded up to SKU): build 0.35 GB RAM, run 0.30 GB RAM, disk 0.02 GB."
+  }
+}

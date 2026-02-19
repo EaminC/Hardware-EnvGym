@@ -1,0 +1,34 @@
+{
+  "name": "mockito_mockito",
+  "url": "https://github.com/mockito/mockito",
+  "mvw": {
+    "mvw_command": "./gradlew build",
+    "build_command": "./gradlew compileJava compileTestJava --no-daemon",
+    "run_command": "./gradlew test --no-daemon",
+    "input_scale": "Full repo build and default test suite",
+    "success_criteria": "exit code 0, all tests pass"
+  },
+  "environment": {
+    "os": "Linux",
+    "methodology": "tutorial.md one-pass profiling; peaks from process-tree measurement (measure_mockito_mockito.sh). RSS sampled every 0.2s for root and all child processes (Gradle/Java workers)."
+  },
+  "static_triage": {
+    "requires_gpu": false,
+    "likely_bottlenecks": ["RAM", "CPU", "Disk"],
+    "notes": "Java mocking framework; Gradle build; Java 17 (Gradle 8.x); no GPU; Gradle spawns multiple JVM workers."
+  },
+  "peaks_observed": {
+    "build_peak_ram_gb": 7.82,
+    "run_peak_ram_gb": 7.21,
+    "peak_disk_gb": 1.87,
+    "build_runtime_seconds": 233.43,
+    "run_runtime_seconds": 112.33,
+    "cpu_utilization_summary": "build and run high (parallel Gradle/Java workers)"
+  },
+  "margins_used": "none",
+  "min_hardware": {
+    "build_min_spec": { "min_ram_gb": 8, "min_disk_gb": 2, "min_vcpu": 2 },
+    "run_min_spec": { "min_ram_gb": 8, "min_disk_gb": 2, "min_vcpu": 2 },
+    "summary": "2 vCPU / 8 GB RAM / 2 GB disk, no GPU. Raw peaks (rounded up to SKU): build 7.82 GB RAM, run 7.21 GB RAM, disk 1.87 GB."
+  }
+}

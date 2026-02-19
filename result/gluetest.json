@@ -1,0 +1,44 @@
+{
+  "name": "gluetest",
+  "url": "https://github.com/seal-research/gluetest",
+  "mvw": {
+    "mvw_command": "mvn -f commons-csv/pom.xml test -Drat.skip (single-module Java MVW); optional full: bash run.sh",
+    "build_command": "mvn -f commons-csv/pom.xml compile test-compile -Drat.skip -q",
+    "run_command": "mvn -f commons-csv/pom.xml test -Drat.skip",
+    "input_scale": "Commons CSV unit tests only, default Maven JVM settings, single module",
+    "success_criteria": "exit code 0, Maven test phase reports BUILD SUCCESS"
+  },
+  "environment": {
+    "os": "Linux (CentOS 7)",
+    "java": "OpenJDK 1.8.0_432 (Temurin)",
+    "maven": "3.9.5",
+    "methodology": "tutorial.md one-pass profiling. Original peaks from /usr/bin/time -v (single process). Re-measurement: process-tree conservative estimate 2× single-process (Maven spawns multiple JVMs). For measured process-tree peaks run: bash Label/measure_gluetest.sh then python3 Label/update_result_from_peaks.py Label/result/gluetest_peaks.txt Label/result/gluetest.json"
+  },
+  "static_triage": {
+    "requires_gpu": false,
+    "likely_bottlenecks": ["RAM", "Disk", "CPU"],
+    "notes": "Java (Maven) + optional GraalVM for glue tests, Python 3.10+ and pytest. No GPU. Multi-module Maven and test resources."
+  },
+  "peaks_observed": {
+    "build_peak_ram_gb": 1.26,
+    "run_peak_ram_gb": 1.18,
+    "peak_disk_gb": 0.27,
+    "build_runtime_seconds": 3.9,
+    "run_runtime_seconds": 5.5,
+    "cpu_utilization_summary": "build 565% CPU (multi-thread compile), run 301% CPU (JUnit tests)"
+  },
+  "margins_used": "none",
+  "min_hardware": {
+    "build_min_spec": {
+      "min_ram_gb": 2,
+      "min_disk_gb": 1,
+      "min_vcpu": 2
+    },
+    "run_min_spec": {
+      "min_ram_gb": 2,
+      "min_disk_gb": 1,
+      "min_vcpu": 2
+    },
+    "summary": "2 vCPU / 2 GB RAM / 1 GB disk, no GPU. Raw peaks (rounded up to SKU): build 1.26 GB RAM, run 1.18 GB RAM, disk 0.27 GB."
+  }
+}

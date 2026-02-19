@@ -1,0 +1,33 @@
+{
+  "name": "ponylang_ponyc",
+  "url": "https://github.com/ponylang/ponyc",
+  "mvw": {
+    "mvw_command": "make libs && make configure && make build && make test",
+    "build_command": "make libs && make configure && make build",
+    "run_command": "make test",
+    "input_scale": "Full source build (LLVM libs + ponyc), default test suite",
+    "success_criteria": "exit code 0"
+  },
+  "environment": {
+    "os": "Linux",
+    "methodology": "tutorial.md one-pass profiling; process-tree RSS peak (monitor_tree.sh), whole tree not single process; MVW actually run."
+  },
+  "static_triage": {
+    "requires_gpu": false,
+    "likely_bottlenecks": ["RAM", "CPU", "Disk"]
+  },
+  "peaks_observed": {
+    "build_peak_ram_gb": 2.3245,
+    "run_peak_ram_gb": 2.1077,
+    "peak_disk_gb": 9.7156,
+    "build_runtime_seconds": null,
+    "run_runtime_seconds": null,
+    "cpu_utilization_summary": "build high (parallel make/ninja, LLVM); run moderate (test suite)"
+  },
+  "margins_used": "none",
+  "min_hardware": {
+    "build_min_spec": { "min_ram_gb": 4, "min_disk_gb": 8, "min_vcpu": 2 },
+    "run_min_spec": { "min_ram_gb": 4, "min_disk_gb": 8, "min_vcpu": 2 },
+    "summary": "2 vCPU / 4 GB RAM / 8 GB disk, no GPU. Raw peaks: build 2.3245 GB, run 2.1077 GB, disk 9.7156 GB."
+  }
+}

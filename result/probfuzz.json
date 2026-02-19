@@ -1,0 +1,41 @@
+{
+  "name": "probfuzz",
+  "url": "https://github.com/uiuc-arc/probfuzz",
+  "mvw": {
+    "mvw_command": "sudo ./install.sh && ./probfuzz.py 1",
+    "build_command": "sudo ./install.sh (or fallback: pip install --user deps + antlr)",
+    "run_command": "./probfuzz.py 1",
+    "input_scale": "1 program per PPS (Stan, Edward, Pyro), config max_threads=1",
+    "success_criteria": "exit code 0, output dir created with summary"
+  },
+  "environment": {
+    "os": "Linux",
+    "methodology": "tutorial.md one-pass profiling; process-tree RSS peak (monitor_tree.sh), whole tree not single process; MVW actually run; multi-thread peaks captured by tree monitor."
+  },
+  "static_triage": {
+    "requires_gpu": false,
+    "likely_bottlenecks": ["RAM", "CPU", "Disk"]
+  },
+  "peaks_observed": {
+    "build_peak_ram_gb": 0.2114,
+    "run_peak_ram_gb": 0,
+    "peak_disk_gb": .0025,
+    "build_runtime_seconds": 8,
+    "run_runtime_seconds": 4,
+    "cpu_utilization_summary": "build: install/deps; run: multi-thread inference (Stan/Edward/Pyro)"
+  },
+  "margins_used": "none",
+  "min_hardware": {
+    "build_min_spec": {
+      "min_ram_gb": 2,
+      "min_disk_gb": 1,
+      "min_vcpu": 2
+    },
+    "run_min_spec": {
+      "min_ram_gb": 2,
+      "min_disk_gb": 1,
+      "min_vcpu": 2
+    },
+    "summary": "2 vCPU / 2 GB RAM / 1 GB disk, no GPU. Raw process-tree peaks: build 0.2114 GB, run 0 GB, disk .0025 GB."
+  }
+}

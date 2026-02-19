@@ -1,0 +1,35 @@
+{
+  "name": "iamkun_dayjs",
+  "url": "https://github.com/iamkun/dayjs",
+  "mvw": {
+    "mvw_command": "npm install && npm test",
+    "build_command": "npm install",
+    "run_command": "npm test",
+    "input_scale": "Full repo; default Jest test suite (multiple TZ + full tests)",
+    "success_criteria": "exit code 0, all tests pass"
+  },
+  "environment": {
+    "os": "Linux (CentOS 7)",
+    "node": "v20.18.2 (Cursor embedded)",
+    "methodology": "tutorial.md one-pass profiling; peaks from process-tree measurement (measure_iamkun_dayjs.sh), RSS sampled every 0.5s for root and all child processes; MVW actually run (npm install + npm test)."
+  },
+  "static_triage": {
+    "requires_gpu": false,
+    "likely_bottlenecks": ["RAM", "CPU", "Disk"],
+    "notes": "JavaScript date library; Node/npm, Jest; no GPU, no large assets; Jest may use workers."
+  },
+  "peaks_observed": {
+    "build_peak_ram_gb": 0.1,
+    "run_peak_ram_gb": 4.17,
+    "peak_disk_gb": 0.36,
+    "build_runtime_seconds": null,
+    "run_runtime_seconds": null,
+    "cpu_utilization_summary": "build moderate (npm install), run high (Jest full suite + coverage)"
+  },
+  "margins_used": "none",
+  "min_hardware": {
+    "build_min_spec": { "min_ram_gb": 8, "min_disk_gb": 1, "min_vcpu": 2 },
+    "run_min_spec": { "min_ram_gb": 8, "min_disk_gb": 1, "min_vcpu": 2 },
+    "summary": "2 vCPU / 8 GB RAM / 1 GB disk, no GPU. Raw peaks (rounded up to SKU): build 0.10 GB RAM, run 4.17 GB RAM, disk 0.36 GB."
+  }
+}

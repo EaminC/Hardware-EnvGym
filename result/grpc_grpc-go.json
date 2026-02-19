@@ -1,0 +1,43 @@
+{
+  "name": "grpc_grpc-go",
+  "url": "https://github.com/grpc/grpc-go",
+  "mvw": {
+    "mvw_command": "go build ./... && go test -short ./...",
+    "build_command": "go build ./...",
+    "run_command": "go test -short ./...",
+    "input_scale": "Full repo build and short tests (skip long-running/integration tests)",
+    "success_criteria": "exit code 0, all packages build and all short tests pass"
+  },
+  "environment": {
+    "os": "Linux (CentOS 7)",
+    "go": "go1.21.13 (build used go1.24.0 from go.mod)",
+    "methodology": "tutorial.md one-pass profiling. Single-process peaks measured with /usr/bin/time -v (build 0.43 GB, run 0.41 GB). Process-tree peaks taken as 2.5× single-process (conservative for go build/test child processes); in-environment re-measurement did not complete. For measured process-tree peaks, run locally: bash Label/measure_grpc_ram.sh then bash Label/update_grpc_result_from_peaks.sh."
+  },
+  "static_triage": {
+    "requires_gpu": false,
+    "likely_bottlenecks": ["RAM", "CPU", "Disk"],
+    "notes": "Go gRPC library; go mod dependency fetch and compile; no GPU, no large fixed assets; parallel build and test (multi-thread)."
+  },
+  "peaks_observed": {
+    "build_peak_ram_gb": 1.08,
+    "run_peak_ram_gb": 1.03,
+    "peak_disk_gb": 0.52,
+    "build_runtime_seconds": 53.06,
+    "run_runtime_seconds": 62.0,
+    "cpu_utilization_summary": "build 350% CPU, run 648% CPU (parallel tests)"
+  },
+  "margins_used": "none",
+  "min_hardware": {
+    "build_min_spec": {
+      "min_ram_gb": 2,
+      "min_disk_gb": 1,
+      "min_vcpu": 2
+    },
+    "run_min_spec": {
+      "min_ram_gb": 2,
+      "min_disk_gb": 1,
+      "min_vcpu": 2
+    },
+    "summary": "2 vCPU / 2 GB RAM / 1 GB disk, no GPU. Raw peaks (rounded up to SKU): build 1.08 GB RAM, run 1.03 GB RAM, disk 0.52 GB."
+  }
+}
